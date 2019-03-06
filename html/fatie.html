@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style>
+    	body{
+
+    	}
+
+    	.aui-bar {
+    		position: relative;
+    		background-color:#2C2C2C;
+    	}
+
+    	.aui-bar .send {
+    		position:absolute;
+    		right: 4%;
+    	}
+
+    	.aui-bar-light {
+			color: #2c2c2c;
+		}
+
+		.aui-bar {
+			font-size: 0.8rem;
+		}
+
+		.aui-list-item-inner {
+			margin-top: 0.75rem;
+		}
+
+		.aui-bar-nav {
+			background-color: #2c2c2c;
+		}
+
+		.aui-bar {
+			font-size: 0.8rem;
+		}
+
+		.aui-list-item-input {
+			padding-bottom:0.75rem;
+		}
+
+		.aui-list-item-input input {
+			height: 2.9rem;
+		}
+
+		.aui-content input::-webkit-input-placeholder {
+			color: #d7d7d7;
+			font-size: 0.6rem;
+			line-height: 1.75rem;
+		}
+
+    	.aui-list-item-inner .aui-list-item-input textarea {
+    		width:92%;
+    		margin-left:auto;
+			margin-right: auto;
+			margin-top:15px;
+			height:7.5rem;
+    	}
+
+    	.tab {
+    		width:100%;
+    		height: 2rem;
+    		position: relative;
+    	}
+
+    	.tab img {
+    		position:absolute;
+    		left:4%;
+    		width:1.5rem;
+    		height:1.5rem;
+
+    	}
+
+    </style>
+</head>
+<body>
+	<header class="aui-bar aui-bar-nav">
+	    <a class="aui-pull-left aui-btn" tapmode onclick="close()">
+	        <span class="aui-iconfont aui-icon-left"></span>
+	    </a>
+	    <div class="aui-title">发表帖子</div>
+	    <div class="send">发送</div>
+	</header>
+	<div class="content">
+		<div class="aui-content aui-margin-b-15">
+			<ul class="aui-list aui-form-list">
+				<li class="aui-list-item">
+					<div class="aui-list-item-inner">
+						<div class="aui-list-item-input">
+							<input type="text" placeholder="输入标题哦~">
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		 <div class="aui-list-item-inner">
+                <div class="aui-list-item-input">
+                    <textarea></textarea>
+                </div>
+         </div>
+         <div class="tab">
+         	<img src="../image/image.png" alt="" />
+         </div>
+	</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+
+	};
+	function close(){
+		api.closeWin({
+		    name: 'fatie'
+		});
+	}
+</script>
+</html>

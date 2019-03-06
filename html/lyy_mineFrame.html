@@ -1,0 +1,502 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style type="text/css">
+        body {
+            height: 100%
+        }
+
+        .wrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        footer {
+            height: 49px;
+            width: 100%;
+            background-color: #fff;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            border-top: 1px solid #e3e3e3;
+        }
+
+        .bottomButtonSection {
+            height: 49px;
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 49px;
+        }
+
+        .bottomButton {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-size: 105px 35px;
+            background-image: url("../image/icon-bottom.png");
+            background-repeat: no-repeat;
+            border: 1px solid #fff;
+            margin-top: 6px;
+        }
+
+        .xuanshangbang {
+            background-position: 0px 0px;
+        }
+
+        .jianghu {
+            background-position: -35px 0px;
+        }
+
+        .xingnang {
+            background-position: -70px 0px;
+        }
+
+        .active {
+            /*background-size: 120px 40px;*/
+            /*width: 40px;*/
+            /*height: 40px;*/
+            margin-top: 3px;
+        }
+
+        .mine_data_content01 {
+            width: 100%;
+            height: 8.5rem;
+            padding-top: 0.8rem;
+            background: url(../image/mine-bg.jpg);
+        }
+
+        .mine_data_icon {
+            width: 4rem;
+            height: 4rem;
+            margin-left: 0.5rem;
+            margin-top: 1.25rem
+        }
+
+        .mine_data_pic {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 2.5rem;
+        }
+
+        .approve {
+            width: 6rem;
+            height: 4rem;
+            margin-left: 5rem;
+            margin-top: -4rem;
+        }
+
+        .mine_approve {
+            width: 8rem;
+            height: 1.5rem;
+            color: black;
+        }
+
+        .mine_approve_01 {
+            width: 10rem;
+            height: 1.2rem;
+            color: black;
+        }
+
+        .mine_data_list01 {
+            width: 100%;
+            height: 2.2rem;
+        }
+
+        .mine_data_list01_text {
+            width: 10rem;
+            height: 1rem;
+            float: left;
+            margin: 0.5rem 0rem 0rem 0.5rem;
+            font-size: 0.7rem;
+            color: #333;
+            position: relative;
+            font-style: style;
+        }
+
+        .mine_data_list01 img {
+            width: 1.5rem;
+            height: 1.5rem;
+            float: right;
+            margin-top: 0.3rem;
+        }
+
+        .mine_data_note01 {
+            width: 100%;
+            height: 0.7rem;
+            background: #f1f1f1;
+        }
+
+        .mine_empty {
+            width: 100%;
+            height: 9rem;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="mine_data_content01">
+            <div class="mine_data_icon">
+                <img class="mine_data_pic" src="../image/avatar.jpg" alt="" tapmode onclick="selectPhone()" id="head_portrait">
+                <div class="approve">
+                    <div class="mine_approve_01">昵称：<span id="userName">未登录</span></div><br>
+                    <div class="mine_approve">悬赏号：<span id="phone">未登录</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content aui-margin-b-15">
+            <ul class="aui-list aui-list-in">
+                <li class="aui-list-item aui-list-item-middle" onclick="personalData()" tapmode>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">个人资料</div>
+                </li>
+                <li class="aui-list-item" onclick="join()" tapmode>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">参加的悬赏</div>
+                    </div>
+                </li>
+                <li class="aui-list-item" onclick="over()" tapmode>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">发布的悬赏</div>
+                    </div>
+                </li>
+                <div class="aui-content aui-margin-b-15">
+                    <ul class="aui-list aui-media-list">
+                        <li class="aui-list-header">
+                        </li>
+                    </ul>
+                </div>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">联系我们</div>
+                    </div>
+                </li>
+                <li class="aui-list-item" onclick="shezhi()" tapmode>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">设置</div>
+                    </div>
+                </li>
+            </ul>
+            </div>
+        </div>
+</body>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript">
+    var userId;
+    var uiMediaScanner;
+    var imageFilter;
+    //设置最大宽度和高度
+    var mostW = 690;
+    var mostH = 690;
+    apiready = function() {
+        addEventout();
+        addEventin();
+        addEventUpdata();
+        if($api.getStorage('user_info')){
+            userId= $api.getStorage('user_info').id;
+            img();
+            find();
+        }
+        //需要在控制台中为本项目添加以下模块
+        //UIMediaScanner 是一个多媒体扫描器，可扫描系统的图片、视频等多媒体资源
+        uiMediaScanner = api.require('UIMediaScanner');
+        //实现图片压缩的功能
+        imageFilter = api.require('imageFilter');
+
+
+    };
+
+    function personalData() {
+        if($api.getStorage('user_info')){
+            api.openWin({
+                name: 'lyy_eidtor',
+                url: './lyy_eidtor.html',
+                pageParam: {
+
+                }
+            });
+        }else{
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                }
+            });
+        }
+    }
+
+
+    function shezhi() {
+            api.openWin({
+                name: 'lyy_shezhi',
+                url: './Lyy_shezhi.html',
+                pageParam: {
+
+                }
+            });
+}
+    function join() {
+        if($api.getStorage('user_info')){
+            api.openWin({
+                name: 'lyy_join',
+                url: './lyy_join.html',
+                pageParam: {
+
+                }
+            });
+        }else{
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                }
+            });
+        }
+    }
+
+    function over() {
+        if($api.getStorage('user_info')){
+            api.openWin({
+                name: 'lyy_over',
+                url: './lyy_over.html',
+                pageParam: {
+
+                }
+            });
+        }else{
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                }
+            });
+        }
+    }
+
+
+    function selectPhone() {
+        if($api.getStorage('user_info')){
+            api.actionSheet({
+                title: '上传头像',
+                cancelTitle: '取消',
+                buttons: ['拍照', '从手机相册选择']
+            }, function(ret, err) {
+                if (ret) {
+                    getPicture(ret.buttonIndex);
+                }
+            });
+        }else{
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                }
+            });
+        }
+    }
+
+    function getPicture(sourceType) {
+        if (sourceType == 1) { // 拍照
+            //获取一张图片
+            api.getPicture({
+                sourceType: 'camera',
+                encodingType: 'png',
+                mediaValue: 'pic',
+                allowEdit: false,
+                quality: 90,
+                saveToPhotoAlbum: true
+            }, function(ret, err) {
+                // 获取拍照数据并处理
+                if (ret) {
+                    var imgSrc = ret.data;
+                    if (imgSrc != "") {
+                        var ele = $api.dom('#avatar');
+                        $api.attr(ele, 'src', imgSrc);
+                        updateFile(imgSrc, "");
+                    }
+                }
+            });
+        } else if (sourceType == 2) { // 从相机中选择
+            uiMediaScanner.open({
+                //返回的资源种类,picture（图片）,video（视频）,all（图片和视频）
+                type: 'picture',
+                //（可选项）图片显示的列数，须大于1
+                column: 4,
+                max: 1,
+                //（可选项）图片排序方式,asc（旧->新）,desc（新->旧）
+                sort: {
+                    key: 'time',
+                    order: 'desc'
+                },
+                //（可选项）模块各部分的文字内容
+                texts: {
+                    stateText: '已选择*项',
+                    cancelText: '取消',
+                    finishText: '完成'
+                },
+                styles: {
+                    bg: '#fff',
+                    mark: {
+                        icon: '',
+                        position: 'bottom_right',
+                        size: 20
+                    },
+                    nav: {
+                        bg: '#eee',
+                        stateColor: '#000',
+                        stateSize: 18,
+                        cancleBg: 'rgba(0,0,0,0)',
+                        cancelColor: '#000',
+                        cancelSize: 18,
+                        finishBg: 'rgba(0,0,0,0)',
+                        finishColor: '#000',
+                        finishSize: 18
+                    }
+                }
+            }, function(ret) {
+                // 获取图片数据并处理
+                if(ret.eventType == 'cancel'){
+                    return;
+                }else if (ret.eventType == 'confirm') {
+                    //alert(JSON.stringify(ret));
+                    if (ret.list.length > 0) {
+                        var imgSrc = ret.list[0].path;
+                        //                        for(var i=0;i<ret.list.length;i++){
+                        //                            var imgSrc=ret.list[i].path;
+                        //                            alert(imgSrc);
+                        //                        }
+                        var ele = $api.dom('#avatar');
+                        $api.attr(ele, 'src', imgSrc);
+                        updateFile(imgSrc, "");
+                    }
+                }
+            });
+        }
+    }
+    /*
+     * 图片上传
+     */
+    function updateFile(path, filename) {
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var File = client.Factory("file");
+        File.save({
+                file: {
+                    isFile: true,
+                    path: path,
+                    values: {
+                        filename: filename
+                    }
+                }
+            },
+            function(data, err) {
+                api.hideProgress();
+                if (data) {
+                    //alert("上传结果：" + JSON.stringify(data));
+                    updata(data.url);
+                } else {
+                    //alert("上传发生错误：" + JSON.stringify(err));
+                }
+            })
+    }
+
+    function updata(url){
+        var client = new Resource(APP_INFO.appId,  APP_INFO.appKey);
+        var Model = client.Factory("user");
+        Model.save({"_id":userId},{"avatar":url}, function(ret,err){
+            if(err){
+                //处理错误 err
+            }else{
+                //处理数据 ret
+                //alert(JSON.stringify(ret));
+                addimg(ret.avatar);
+            }
+        })
+    }
+
+    function addimg(data){
+        $api.attr($api.byId('head_portrait'), 'src', '' + data + '');
+    }
+    
+    function find(){
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("user");
+
+        Model.get({"_id":userId}, function(ret,err){
+            if(err){
+                //处理错误 err
+            }else{
+                //alert(JSON.stringify(ret));
+                //编译模版
+                //alert(JSON.stringify(ret));
+
+                    //将数据显示到网页中
+                    if(ret.nickname){
+                    	$( '#userName' ).html(ret.nickname);
+                    }else{
+                    	$( '#userName' ).html(ret.username);
+                    }
+                    if(ret.mobile){
+                    	$( '#phone' ).html(ret.mobile);
+                    }else{
+                    	$( '#phone' ).html("未输入");
+                    }
+            }
+        })
+    }
+    function addEventout(){
+        api.addEventListener({
+            name: 'lognout'
+        }, function(ret, err) {
+             window.location.reload();
+        });
+    }
+    function addEventin(){
+        api.addEventListener({
+            name: 'login'
+        }, function(ret, err) {
+             window.location.reload();
+        });
+    }
+
+    function img(){
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("user");
+        Model.get({"_id":userId}, function(ret,err){
+            if(err){
+                //处理错误 err
+            }else{
+                //处理数据 ret
+                //alert(JSON.stringify(ret))
+                if(ret.avatar){
+                	addimg(ret.avatar);
+                }else{
+                	$("#head_portrait").attr("src","../image/avatar.jpg");
+                }
+                //addimg(ret.avatar);
+            }
+
+        })
+    }
+
+    function addEventUpdata(){
+        api.addEventListener({
+            name: 'updataInformation'
+        }, function(ret, err) {
+             window.location.reload();
+        });
+    }
+</script>
+
+</html>

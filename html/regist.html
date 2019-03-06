@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+	<style>
+		body {}
+
+		.wrap {
+			width: 100%;
+			height: 100%;
+		}
+
+		.wrap .aui-bar-nav {
+			background-color: #2C2C2C;
+		}
+
+		.aui-bar-light {
+			color: #2c2c2c;
+		}
+
+		.aui-bar {
+			font-size: 0.8rem;
+		}
+
+		.aui-list-item-inner {
+			margin-top: 0.75rem;
+		}
+
+		.aui-bar-nav {
+			background-color: #2c2c2c;
+		}
+
+		.aui-bar {
+			font-size: 0.8rem;
+		}
+
+		.aui-list-item-input input {
+			height: 2.9rem;
+		}
+
+		.aui-content input::-webkit-input-placeholder {
+			color: #d7d7d7;
+			font-size: 0.6rem;
+			line-height: 1.75rem;
+		}
+
+		.lhx_change_password_sure {
+			width: 100%;
+			padding: 2.9rem 0.75rem 0rem;
+		}
+
+		.lhx_change_password_sure div {
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		.aui-btn-block {
+			display: block;
+		}
+
+		.aui-btn-block.aui-btn-sm {
+			font-size: 0.7rem;
+			height: 1.75rem;
+			line-height: 1.75rem;
+		}
+
+		.lhx_change_password_sure .aui-btn {
+			color: #ffffff !important;
+			background-color: #2c2c2c !important;
+			margin-top: 1.5rem;
+		}
+
+		.text {
+			width: 100%;
+			height: 1rem;
+			margin-top: 0.75rem;
+			padding-left: 0.8rem;
+			font-size: 12px;
+		}
+
+		.text span {
+			color: red;
+		}
+
+		.aui-list-item-inner .aui-btn {
+			margin-right: 5%;
+			background-color: #2C2C2C !important;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="aui-bar aui-bar-nav" id="header">
+		<a class="aui-pull-left aui-btn">
+			<span class="aui-iconfont aui-icon-left" tapmode onclick="close();"></span>
+		</a>
+		<div class="aui-title">账号注册</div>
+	</header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+        var header = $api.byId('header');
+        var headerH = $api.fixStatusBar(header);
+        api.openFrame({
+            name: 'registFrame',
+            url: './registFrame.html',
+            rect: {
+                x: 0,
+                y: headerH,
+                w: 'auto',
+                h: 'auto'
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: false,
+            bgColor: 'rgba(0,0,0,0)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });
+    };
+    
+    function close(){
+    	api.closeWin({
+            name: 'regist'
+        });
+    }
+	
+</script>
+
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        body {}
+
+        .content_top {
+            width: 100%;
+            height: 130px;
+            background: white;
+        }
+
+        .content_top_left {
+            width: 5rem;
+            height: 5rem;
+            margin: 0.75rem;
+            float: left;
+            background-image: url(../image/songcan.jpg);
+            background-size: 5rem;
+            background-repeat: no-repeat;
+            margin-left: 1.5rem;
+        }
+
+        .content_top_right {
+            width: 40%;
+            text-align: center;
+            float: right;
+            height: 5rem;
+            margin: 0.75rem;
+            margin-right: 2.5rem;
+            color: #51534d;
+        }
+
+        .content_content {
+            background: white;
+        }
+
+        .content_content_top {
+            width: 100%;
+            padding: 0.75rem;
+            float: left;
+        }
+
+        .content_content_top input {
+            /*目标地址*/
+            width: 100%;
+            float: left;
+            text-align: center;
+            font-size: 12px;
+            line-height: 26px;
+            height: 26px;
+            border-bottom: solid 1px #ddd;
+        }
+
+        .content_content_bottom {
+            width: 100%;
+            padding: 0.75rem;
+            float: left;
+        }
+
+        .content_content_bottom input {
+            /*我的地址*/
+            width: 100%;
+            float: left;
+            text-align: center;
+            font-size: 12px;
+            line-height: 26px;
+            height: 26px;
+            border-bottom: solid 1px #ddd;
+        }
+
+        .content_content_textarea {
+            width: 100%;
+            padding: 0.75rem;
+        }
+
+        #textarea {
+            padding: 0.5rem;
+            border: none;
+            font-size: 0.7rem;
+            height: 8rem;
+        }
+
+        .content_bottom {
+            /*金额与发布*/
+            background: white;
+            padding: 0.75rem;
+            padding-left: 1.5rem;
+            padding-right: 1rem;
+        }
+
+        .content_bottom .money {
+            border-bottom: solid 1px;
+            width: 25%;
+            text-align: center;
+            font-size: 14px;
+            line-height: 14px;
+            display: inline-block;
+            height: 2.2rem;
+            color: #a9a9a9;
+        }
+
+        .content_bottom .submit {
+            float: right;
+            color: white;
+            background: red;
+            font-size: 14px;
+            line-height: 2.2rem;
+            ;
+            width: 30%;
+            height: 2.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .content_bottom .submitGregy {
+            /*是、接单红色按钮切换类     灰色*/
+            float: right;
+            color: white;
+            background: #B0B0B0;
+            font-size: 14px;
+            line-height: 2.2rem;
+            ;
+            width: 30%;
+            height: 2.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .content_top_right .input {
+            display: block;
+            height: 1.75rem;
+        }
+
+        .content_top_right .input input {
+            border-radius: 50%;
+        }
+
+        .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #666;
+            font-weight: 900;
+        }
+    </style>
+</head>
+
+<body>
+    <content>
+        <div class="content_top">
+            <div class="content_top_left"></div>
+            <div class="content_top_right">
+                <div>
+                    <div class="input">
+                        <input id='qucan' type="radio" value="0" name="need" class="aui-radio">
+                        <label for="check1">定时取餐</label>
+                    </div>
+                    <div class="input">
+                        <input id='gouwu' type="radio" value="1" name="need" class="aui-radio">
+                        <label for="check2">超市买物</label>
+                    </div>
+                    <div class="input">
+                        <input id='kuaidi' type="radio" value="2" name="need" class="aui-radio">
+                        <label for="check3">替取快递</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_content">
+            <div class="content_content_top">
+                <input id="targetAddress" type="text" name="" value="" placeholder="目标地址">
+            </div>
+            <div class="content_content_bottom">
+                <input id="reciveAddress" type="text" name="" value="" placeholder="收货地址">
+            </div>
+            <div class="content_content_textarea">
+                <textarea name="" id="textarea" cols="30" rows="5" placeholder="请输入详细信息（如快递单号，购买物品信息）"></textarea>
+            </div>
+        </div>
+        <div class="content_bottom">
+            <input id="giveaway" type="number" pattern="[0-9]*" name="" value="" placeholder="输入赏金" class="money">
+            <div class="aui-list-item-input" style="display: inline-block; margin-left: 1.6rem; color: #a9a9a9; border-bottom: #a9a9a9 solid 1px; width: 25%; text-align: center; font-size: 0.9rem;">
+                <select id="selector" style="font-size: 0.7rem; width: 100%; text-align: center; text-align-last: center;color: #a9a9a9;">
+                    <option value="0">时间限制</option>
+                    <option value="1">无限制</option>
+                    <option value="2">15分钟内</option>
+                    <option value="3">30分钟内</option>
+                    <option value="4">1小时内</option>
+                    <option value="5">2小时内</option>
+                    <option value="6">3小时内</option>
+                </select>
+            </div>
+            <input type="submit" value="发布" class="submit" onclick="doSubmit();">
+        </div>
+    </content>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/aui-scroll.js"></script>
+<script src="../script/aui-pull-refresh.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script src="../script/constant.js" charset="utf-8"></script>
+<script src="../script/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var mylon, mylat;
+    apiready = function() {
+        var aMap = api.require("aMap");
+        aMap.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: 320,
+                h: 300
+            },
+            showUserLocation: true,
+            zoomLevel: 11,
+            center: {
+                lon: 116.4021310000,
+                lat: 39.9994480000
+            },
+            fixedOn: api.frameName,
+            fixed: true
+        }, function(ret, err) {
+            if (ret.status) {
+                // alert(JSON.stringify(ret));
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+        aMap.hide();
+        aMap.getLocation({
+            "autoStop": true
+        }, function(ret, err) {
+            if (ret.status) {
+                mylon = ret.lon;
+                mylat = ret.lat;
+                // alert(JSON.stringify(ret));
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+
+    };
+
+    function closeFabu() {
+        api.closeWin({
+            name: 'sw_fabu'
+        });
+    };
+
+    function doSubmit() {
+        var userName = $api.getStorage('user_info').id;
+        var releaseAddress = $('#reciveAddress').val();
+        var type = $("input[type='radio']:checked").val();
+        var information = $('#textarea').val();
+        var goodAddress = $('#targetAddress').val();
+        var goodsMoney = $('#giveaway').val();
+        var timeLimit = $('#selector option:selected').text();
+        var imgUrl;
+        //var timeLimit = $('#selector').get(0).selectedIndex.html;
+        //console.log(userName+","+releaseAddress+","+type+","+information+","+goodAddress+","+goodsMoney+","+timeLimit);
+        if (!userName || !releaseAddress || !type || !information || !goodAddress || !goodsMoney) {
+            alert("您还没有输出完成~");
+        } else {
+            if(type==0){
+                imgUrl="../image/qu.png";
+            }else if(type==1){
+                imgUrl="../image/maiwu.png";
+            }else if(type==2){
+                imgUrl="../image/kuaidi.png";
+            }
+            if(type==0){
+                type="取餐";
+            }else if(type==1){
+                type="买物";
+            }else if(type==2){
+                type="快递";
+            }
+            if (goodsMoney < 500) {
+
+                var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+                var Model = client.Factory("mission");
+                Model.save({
+                    "userName": userName,
+                    "releaseAddress": releaseAddress,
+                    "releaseName": type,
+                    "information": information,
+                    "goodsAddress": goodAddress,
+                    "goodsMoney": goodsMoney,
+                    "timeLimit": timeLimit,
+                    "imgUrl":imgUrl,
+                    "lon": mylon,
+                    "lat": mylat
+                }, function(ret, err) {
+                    if (err) {
+                        //处理错误 err
+                    } else {
+                        //处理数据 ret
+                        api.closeWin({
+                            name: 'sw_fabu'
+                        });
+                    }
+                })
+            } else {
+                alert("请输入500以内的赏金");
+            }
+    }
+}
+</script>
+
+</html>

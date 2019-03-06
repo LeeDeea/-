@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        body {}
+
+
+
+        .content_top_left {
+            width: 5rem;
+            height: 5rem;
+            margin: 0.75rem;
+            float: left;
+            background-image: url(../image/qu.png);
+            background-size: 5rem;
+            background-repeat: no-repeat;
+        }
+
+        .content_top_right {
+            width: 40%;
+            text-align: center;
+            float: right;
+            height: 5rem;
+            margin: 0.75rem;
+            margin-right: 2.5rem;
+            color: #51534d;
+        }
+
+        .content_content {
+            background: white;
+            width: 100%;
+            height: 130px;
+            background: white;
+        }
+
+        .content_content_top {
+            width: 100%;
+            padding: 0.75rem;
+            float: left;
+        }
+
+        .content_content_top p {
+            /*目标地址*/
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 26px;
+            border-bottom: solid 1px #ddd;
+        }
+
+        .content_content_bottom {
+            width: 100%;
+            padding: 0.75rem;
+            float: left;
+        }
+
+        .content_content_bottom p {
+            /*我的地址*/
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 26px;
+            border-bottom: solid 1px #ddd;
+            max-width: 100%;
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+
+        .content_content_textarea {
+            width: 100%;
+            padding: 0.75rem;
+        }
+
+        #textarea {
+            padding: 0.5rem;
+            border: none;
+            font-size: 0.7rem;
+            height: 6rem;
+            max-width: 300px;
+            max-height: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            overflow-y: scroll;
+        }
+
+        .content_bottom {
+            /*金额与发布*/
+            background: white;
+            padding: 0.75rem;
+            padding-left: 1.5rem;
+            padding-right: 1rem;
+        }
+
+        .content_bottom .money {
+            width: 25%;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 2.5rem;
+            display: inline-block;
+            height: 2.5rem;
+            color: #f9c51c;
+        }
+
+        .content_bottom .submit {
+            float: right;
+            color: white;
+            background: red;
+            font-size: 14px;
+            line-height: 2.2rem;
+            ;
+            width: 30%;
+            height: 2.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .content_bottom .submitGregy {
+            /*是、接单红色按钮切换类     灰色*/
+            float: right;
+            color: white;
+            background: #B0B0B0;
+            font-size: 14px;
+            line-height: 2.2rem;
+            ;
+            width: 30%;
+            height: 2.2rem;
+            border-radius: 0.2rem;
+        }
+
+        .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #666;
+            font-weight: 900;
+        }
+
+        .timeLimit {
+            display: inline-block;
+            color: #7588ff;
+            padding-left: 5rem;
+            font-size: 0.8rem;
+        }
+    </style>
+
+    <body>
+</head>
+<header class="aui-bar aui-bar-nav aui-bar-light" id="header">
+    <a class="aui-pull-left">
+        <span class="aui-iconfont aui-icon-left" onclick="closeContent();"></span>
+    </a>
+    <div class="aui-title" style="color:black;">订单详细信息</div>
+</header>
+<content>
+    <div id="warp">
+
+    </div>
+</content>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript" src="../script/aui-scroll.js"></script>
+<script src="../script/aui-pull-refresh.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script id="articleTemp" type="text/x-dot-template">
+    {{~it:value:index}}
+    <div class="content_content">
+        <div class="content_top_left"></div>
+        <div class="content_content_textarea">
+            <p id="textarea">{{=value.information}}</p>
+        </div>
+        <div class="content_content_top">
+            <p>目标:{{=value.goodsAddress}}</p>
+        </div>
+        <div class="content_content_bottom">
+            <p>收货:{{=value.releaseAddress}}</p>
+        </div>
+    </div>
+    <div class="content_bottom">
+        <div class="money"><b>金额:{{=value.goodsMoney}}元</b></div>
+        <div class="timeLimit">限时:{{=value.timeLimit}}</div>
+    </div>
+    {{~}}
+</script>
+<script type="text/javascript">
+    var id;
+    var userId;
+    apiready = function() {
+        userId = api.pageParam.userId;
+        //alert(JSON.stringify(userId));
+        id = api.pageParam.id;
+        //alert(JSON.stringify(id));
+        $api.fixStatusBar($api.byId("header"));
+        queryArticleList();
+    };
+
+    function closeContent() {
+        api.closeWin({
+            name: 'sw_content'
+        });
+    };
+
+    function closeSw_content() {
+        api.closeWin({
+            animation: "none",
+            name: 'sw_content'
+        });
+    }
+
+    function queryArticleList() {
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("mission");
+        Model.query({
+            "filter": {
+                "where": {
+                    "id": id
+                },
+                "include": "userNamePointer",
+
+            }
+        }, function(ret, err) {
+            if (err) {
+                alert("抱歉亲，又失败了呢~");
+            } else {
+                var interation = doT.template($('#articleTemp').html());
+                //将数据显示到网页中
+                $('#warp').html(interation(ret));
+            }
+        })
+    }
+
+    function acceptDan() {
+        if ($api.getStorage('user_info')){
+            if ($api.getStorage('user_info').id == userId){
+                alert('这是你自己的单哦～');
+            } else {
+                var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+                var Model = client.Factory("mission");
+                Model.get({"_id":"5436442ca1a14d1c60de3e06"}, function(ret,err){
+                    if(err){
+                        //处理错误 err
+                        alert("出现错误了，请再尝试一次～");
+                    }else{
+                        if (!ret.acceptName){
+                            //处理数据 ret
+                            Model.save({"_id":id},{"acceptName":$api.getStorage('user_info').id}, function(ret,err){
+                                if(err){
+                                    //处理错误 err
+                                    alert("出现错误了，请再尝试一次～");
+                                }else{
+                                    //处理数据 ret
+                                    alert("接单成功～");
+                                    api.openWin({
+                                        name: 'lyy_join',
+                                        url: './lyy_join.html',
+                                        pageParam: {
+                                            name: 'lyy_join'
+                                        }
+                                    });
+                                    setTimeout(closeSw_content, 900);
+                                }
+                            })
+                        } else {
+                            alert('手速有些慢哦，已经被别人接单了呢～');
+                        }
+                    }
+                })
+            }
+        } else {
+            api.openWin({
+                name: 'login',
+                url: './login.html'
+            });
+        }
+    }
+</script>
+
+</html>

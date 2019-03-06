@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #fff;
+        }
+
+        .warp{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .aui-list .aui-list-item-title {
+            font-size: 0.6rem;
+        }
+
+        .left_menu {
+            width: 22%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-right: 1px solid #999;
+        }
+
+        .aui-list.aui-list-in .aui-list-item {
+            border-bottom: 1px solid #999;
+            background: none;
+        }
+
+        .right_content {
+            width: 77%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .aui-list-item-inner.aui-list-item-arrow {
+            font-size: 0.7rem;
+        }
+
+        .right_content_dis {
+            font-size: 0.6rem;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warp">
+        <div class="aui-content aui-margin-b-15 left_menu">
+            <ul class="aui-list aui-list-in">
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">学习</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">失物招领</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">租赁</div>
+                    </div>
+                </li>
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">游戏</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="aui-content aui-margin-b-15 right_content">
+            <ul class="aui-list aui-media-list">
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner" onclick="phy()" tapmode>
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-inner aui-list-item-arrow">
+                            大学物理
+                        </div>
+                    </div>
+                    <div class="right_content_dis">这是一句话描述</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+    };
+
+    function phy(){
+        api.openWin({
+            name: 'xiangfang_content',
+            url: './xiangfang_content.html',
+            pageParam: {
+
+            }
+        });
+    }
+</script>
+
+</html>

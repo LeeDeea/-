@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <style>
+      .aui-tab-item.aui-active {
+            color: #2c2c2c;
+            border-bottom: 2px solid #2c2c2c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aui-tab">
+            <div class="aui-tab-item aui-active" tapmode onclick="shejiao();">社交</div>
+            <div class="aui-tab-item" tapmode onclick="luntan();">论坛</div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    apiready = function() {
+        var frameHeight=api.pageParam.frameHeight-44;
+        var headerH=api.pageParam.headerH+44;
+        api.openFrameGroup (jianghuGroup={
+            name: 'jianghuFrameGroup',
+            background: '#fff',
+            scrollEnabled: true,
+            rect: {
+                 x: 0,
+                 y: headerH,
+                 w: 'auto',
+                 h: frameHeight
+            },
+            index: 0,
+            frames: [{
+                name: 'jianghu_shejiao',
+                url: 'jianghu_shejiao.html',
+                bgColor: '#fff'
+            },{
+                name: 'jianghu_xiangfang_frame',
+                url: 'jianghu_xiangfang_frame.html',
+                bgColor: '#fff'
+            }]
+        }, function(ret, err){
+            if( ret ){
+                 //alert( JSON.stringify( ret ) );
+                if (ret.index==0) {
+                    $('.aui-tab-item').removeClass('aui-active');
+                    $('.aui-tab-item').eq(0).addClass('aui-active');
+                }
+                if (ret.index==1) {
+                    $('.aui-tab-item').removeClass('aui-active');
+                    $('.aui-tab-item').eq(1).addClass('aui-active');
+                }
+            }else{
+                 //alert( JSON.stringify( err ) );
+            }
+        });
+        //console.log(JSON.stringify(jianghuGroup));
+        api.setFrameGroupAttr({
+            name: 'jianghuFrameGroup',
+            hidden: true
+        });
+        api.addEventListener({
+            name: 'frameIndex1'
+        }, function(ret, err){
+            api.setFrameGroupAttr({
+                name: 'jianghuFrameGroup',
+                hidden: false
+            });
+            // jianghuGroup.rect.h = frameHeight;
+            // if( ret ){
+            //      jianghuframegroup.rect.h = frameHeight;
+            //      console.log(JSON.stringify(ret));
+            // }else{
+            //      alert( JSON.stringify( err ) );
+            // }
+        });
+        api.addEventListener({
+            name: 'frameIndex02'
+        }, function(ret, err){
+            api.setFrameGroupAttr({
+                name: 'jianghuFrameGroup',
+                hidden: true
+            });
+            // jianghuGroup.rect.h = 0;
+            // if( ret ){
+            //      jianghuframegroup.rect.h = 0;
+            //      console.log(JSON.stringify(ret));
+            // }else{
+            //      alert( JSON.stringify( err ) );
+            // }
+        });
+    };
+
+    function shejiao() {
+        api.setFrameGroupIndex({
+            name: 'jianghuFrameGroup',
+            index: 0,
+            scroll: false
+        });
+        $('.aui-tab-item').removeClass('aui-active');
+        $('.aui-tab-item').eq(0).addClass('aui-active');
+    }
+
+    function luntan() {
+        api.setFrameGroupIndex({
+            name: 'jianghuFrameGroup',
+            index: 1,
+            scroll: false
+        });
+        $('.aui-tab-item').removeClass('aui-active');
+        $('.aui-tab-item').eq(1).addClass('aui-active');
+    }
+
+</script>
+
+</html>

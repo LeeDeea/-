@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        body {}
+
+        .wrap {
+            padding: 0px 15px;
+        }
+
+        #release {
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            line-height: 50px;
+            position: fixed;
+            right: 0px;
+            bottom: 50px;
+            border-radius: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            font-weight: 400;
+        }
+
+        .aui-list-item .aui-media-list-item-inner .aui-list-item-inner {
+            /*margin-top: 0.1rem;*/
+            margin-bottom: 0.1rem;
+            padding-left: 0.3rem;
+            max-width: 310px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: #f7f7f7;
+            border-bottom-left-radius: 0.7rem;
+        }
+
+        .aui-list-item-inner .aui-list-item-text {
+            /*padding-bottom: 0.2rem;*/
+            max-width: 310px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .aui-list-item-text .aui-list-item-title {
+            font-weight: 200;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warp">
+        <div class="aui-content ">
+            <ul class="aui-list aui-media-list" id="articleList-box">
+
+            </ul>
+        </div>
+    </div>
+    <div id="release">
+        <div class="aui-col-xs-3" onclick="fabu();">
+            <i class="aui-iconfont aui-icon-edit" style="font-size:20px;color:#fff;padding-left:15px;"></i>
+        </div>
+    </div>
+</body>
+<script id="articleTemp" type="text/x-dot-template">
+    {{~it:value:index}}
+    <li class="aui-list-item" onclick="content('{{=value.id}}','{{=value.userName}}');">
+        <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-media">
+                <img src="../image/qu.png">
+            </div>
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-text">
+                    <div class="aui-list-item-title"><b>{{=value.releaseName}}</b></div>
+                    <div class="aui-list-item-right">
+                    </div>
+                </div>
+                <div class="aui-list-item-text">
+                    目标：{{=value.goodsAddress}}({{=value.information}})
+                </div>
+                <div class="aui-list-item-text">
+                    收货：{{=value.releaseAddress}}
+                </div>
+            </div>
+        </div>
+        <div class="aui-info" style="line-height:0.8rem;">
+            <div class="aui-info-item">
+                <img src="../image/avatar.jpg" style="width:1rem" class="aui-img-round" /><span class="aui-margin-l-5">{{=value.userName.userRealName}}</span>
+            </div>
+            <div class="aui-info-item longtime" name="shortTime"></div>
+            <div name="time" style="display:none;">{{=value.createdAt}}</div>
+            <div class="aui-info-item limitTime"><b>{{=value.timeLimit}}</b></div>
+            <div style="display:inline-block;color: #f9c51c;"><b>{{=value.goodsMoney}}元</b></div>
+        </div>
+    </li>
+    {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript" src="../script/aui-scroll.js"></script>
+<script src="../script/aui-pull-refresh.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    var limiteNum = 15;
+    apiready = function() {
+        queryArticleList();
+    };
+</script>
+<script type="text/javascript">
+    function fabu() {
+        if ($api.getStorage('user_info')) {
+            api.openWin({
+
+                name: 'sw_fabu',
+                url: './sw_fabu.html'
+            });
+        } else {
+            api.openWin({
+
+                name: 'login',
+                url: './login.html'
+            });
+        }
+
+
+    }
+
+    function content(id, userId) {
+
+        api.openWin({
+            name: 'sw_content',
+            url: './sw_content.html',
+            pageParam: {
+                "id": id,
+                "userId": userId
+            }
+        });
+    }
+
+    var pullRefresh = new auiPullToRefresh({
+        container: document.querySelector('.warp'),
+        triggerDistance: 100
+    }, function(ret) {
+        if (ret.status == "success") {
+            pullRefresh.cancelLoading();
+            queryArticleList();
+        }
+    })
+
+    function queryArticleList() {
+        var NID= $api.getStorage('user_info').id;
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("mission");
+        Model.query({
+            "filter": {
+                "where": {
+                    "userName": NID//发布人id
+                }, //或者["id","make","model"]
+                "include": "userNamePointer",
+                "limit": limiteNum
+
+            }
+        }, function(ret, err) {
+            if (err) {
+                alert("抱歉亲，又失败了呢~");
+            } else {
+                //alert(JSON.stringify(ret))
+                //alert(JSON.stringify(ret));
+                var interation = doT.template($('#articleTemp').html());
+                //将数据显示到网页中
+                $('#articleList-box').html(interation(ret));
+                //做时间判断定时器
+                // var createdDate = new Date(ret[0].createdAt);
+    			dsq();
+                setInterval(dsq,60000);
+            }
+        })
+    }
+
+
+    function dsq() {
+        var divEleArray = document.getElementsByName("time");
+        var shortTimeArray = document.getElementsByName("shortTime");
+        var nowTime = new Date();
+
+        for (var i = 0; i < divEleArray.length; i++) {
+            var html = divEleArray[i].innerHTML;
+            var createdDate = new Date(html);
+            var Cz = nowTime.getTime() - createdDate.getTime();
+            // var days = parseInt(Cz/(24*60*60*1000));
+            Cz = Cz % (24 * 60 * 60 * 1000);
+            var hours = parseInt(Cz / (60 * 60 * 1000))
+            Cz = Cz % (60 * 60 * 1000);
+            var mins = parseInt(Cz / (60 * 1000));
+            // $('.longtime').html(mins+'分钟之前');
+            if (hours < 1) {
+                shortTimeArray[i].innerHTML = mins + '分钟之前';
+            }
+            // }else if(1<hours>2){
+            //     shortTimeArray[i].innerHTML=hours+'小时之前';
+            // // $(".longtime").html();
+            // }else if(2<hours>3){
+            //     shortTimeArray[i].innerHTML=hours+'小时之前';
+            // }
+            else {
+                shortTimeArray[i].innerHTML = hours + "时" + mins + '分钟之前';
+            }
+        }
+
+    }
+</script>
+
+</html>

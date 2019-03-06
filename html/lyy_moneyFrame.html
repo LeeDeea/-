@@ -1,0 +1,193 @@
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" href="../css/aui.css">
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrap {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+        }
+
+        footer {
+            height: 49px;
+            width: 100%;
+            background-color: #fff;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            border-top: 1px solid #e3e3e3;
+        }
+
+        .bottomButtonSection {
+            height: 49px;
+            width: 33.3%;
+            float: left;
+            text-align: center;
+            line-height: 49px;
+        }
+
+        .bottomButton {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-size: 105px 35px;
+            background-image: url("../image/icon-bottom.png");
+            background-repeat: no-repeat;
+            border: 1px solid #fff;
+            margin-top: 6px;
+        }
+
+        .xuanshangbang {
+            background-position: 0px 0px;
+        }
+
+        .jianghu {
+            background-position: -35px 0px;
+        }
+
+        .xingnang {
+            background-position: -70px 0px;
+        }
+
+        .active {
+            /*background-size: 120px 40px;*/
+            /*width: 40px;*/
+            /*height: 40px;*/
+            margin-top: 3px;
+        }
+        .mine_data_content01 {
+            width: 100%;
+            height: 8.5rem;
+            padding-top: 0.8rem;
+            background: url(../image/mine-bg.jpg);
+        }
+        .mine_data_icon {
+            width: 5rem;
+            height: 5rem;
+            margin: 1rem auto;
+        }
+        .mine_data_pic {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 2.5rem;
+        }
+        .mine_approve {
+            width: 6rem;
+            height: 1.5rem;           
+        }
+        .mine_approve h1 {
+            color: #FF3300;
+            text-align: center;
+            margin: 0 auto;
+        }
+        .mine_approve_01 {
+            width: 5rem;
+            height: 1.8rem;          
+            
+        }
+        .mine_approve_01 h1 {
+            color: #FF3300;
+             text-align: center;
+        }
+        .mine_data_list01 {
+            width: 100%;
+            height: 2.2rem;
+        }
+        .mine_data_list01_text {
+            width: 10rem;
+            height: 1rem;
+            float: left;
+            margin: 0.5rem 0rem 0rem 0.5rem;
+            font-size: 0.7rem;
+            color: #333;
+            position: relative;
+            font-style: style;
+        }
+        .mine_data_list01 img {
+            width: 1.5rem;
+            height: 1.5rem;
+            float: right;
+            margin-top:0.3rem;
+        }
+        .mine_data_list_grayline {
+            width: 100%;
+            height: 0.06rem;
+            background: #f1f1f1;
+        }
+        .mine_data_note01 {
+            width: 100%;
+            height: 0.7rem;
+            background: #f1f1f1;
+        }
+        .mine_empty {
+            width: 100%;
+            height: 26rem;
+            background-color: #f1f1f1;
+        }
+         .mine_data_note01 {
+            width: 100%;
+            height: 0.7rem;
+            background: #f1f1f1;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="mine_data_content01">
+            <div class="mine_data_icon">
+                <div class="mine_approve"><h1>账户余额</h1></div><br>
+                <div class="mine_approve_01"><h1>0.00元</h1></div>
+            </div>
+        </div>
+        <div class="aui-content aui-margin-b-15">
+            <ul class="aui-list aui-list-in">
+                <li class="aui-list-item aui-list-item-middle" onclick="recharge()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">充值</div>
+                </li>
+                <li class="aui-list-item" onclick="recharge()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">提现 </div>
+                    </div>
+                </li>
+                <li class="aui-list-item" onclick="recharge()">
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-title">账目明显</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="mine_empty"></div>
+
+    </div>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,4 @@
+var APP_INFO =  {
+    "appId" : "A6077911367061",
+    "appKey" : "A624432D-2A8E-0E7F-5BAD-395B35C23809"
+}

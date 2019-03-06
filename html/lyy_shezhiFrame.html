@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>设置</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style>
+    	.aui-title{
+            color: #fff;
+        }
+    	.aui-bar-nav{
+            height: 2.2rem;
+            background: #2c2c2c;
+        }
+        #header{
+            height: 3rem;
+        }
+        .aui-btn-block.aui-btn-sm {
+            font-size: 0.7rem;
+            height: 1.8rem;
+            line-height: 1.85rem;
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">接受新消息通知</div>
+                    <div class="aui-list-item-right">
+                        <input type="checkbox" class="aui-switch" checked>
+                    </div>
+                </div>
+            </li>
+        </ul>
+   </div>
+   <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">声音</div>
+                    <div class="aui-list-item-right">
+                        <input type="checkbox" class="aui-switch" checked>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">震动</div>
+                    <div class="aui-list-item-right">
+                        <input type="checkbox" class="aui-switch" checked>
+                    </div>
+                </div>
+            </li>
+        </ul>
+   </div>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item" onclick="about()" tapmode>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">关于我们</div>
+                </div>
+            </li>
+            <li class="aui-list-item" onclick="back()" tapmode>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title" >意见反馈</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aui-content-padded">
+        <p><div class="aui-btn aui-btn-block aui-btn-sm" onclick="out()" tapmode>退出登录</div></p>
+    </div>
+</body>
+<script type="text/javascript" src="../script/aui-dialog.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript">
+    var userId;
+    apiready = function() {
+        if($api.getStorage('user_info')){
+            userId= $api.getStorage('user_info').id;
+        }else{
+            $('.aui-content-padded').css({"display":"none"});
+        }
+    }
+
+    function about() {
+        api.openWin({
+            name: 'lyy_about',
+            url: './lyy_about.html',
+            pageParam: {
+
+            }
+        });
+    }
+
+    function back() {
+        api.openWin({
+            name: 'lyy_feedback',
+            url: './lyy_feedback.html',
+            pageParam: {
+
+            }
+        });
+    }
+
+    function out(){
+       $api.clearStorage();
+       api.sendEvent({
+            name: 'lognout',
+            extra: {
+            }
+        });
+       api.closeToWin({
+            name: 'root'
+        });
+    }
+
+</script>
+</html>

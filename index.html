@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <!-- <link rel="stylesheet" href="./css/aui.css"> -->
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrap {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+
+        #header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: #2c2c2c;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+        }
+
+        .flex-1 {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+        }
+
+        footer {
+            height: 49px;
+            width: 100%;
+            background-color: #fff;
+            color: white;
+            line-height: 30px;
+            text-align: center;
+            border-top: 1px solid #e3e3e3;
+        }
+
+        .bottomButtonSection {
+            height: 49px;
+            width: 50%;
+            float: left;
+            text-align: center;
+            line-height: 49px;
+        }
+
+        .bottomButton {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-size: 105px 35px;
+            background-image: url("./image/icon-bottom.png");
+            background-repeat: no-repeat;
+            border: 1px solid #fff;
+            margin-top: 6px;
+        }
+
+        .xuanshangbang {
+            background-position: 0px 0px;
+        }
+
+        .jianghu {
+            background-position: -35px 0px;
+        }
+
+        .xingnang {
+            background-position: -70px 0px;
+        }
+
+        .active {
+            /*background-size: 120px 40px;*/
+            /*width: 40px;*/
+            /*height: 40px;*/
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body class="wrap">
+    <header id="header"></header>
+    <section class="flex-1">
+
+    </section>
+    <footer class="footer" id="footer">
+        <div class="bottomButtonSection" onclick="xuanshang();" tapmode>
+            <div class="bottomButton xuanshangbang active" id="xuanshangbang"></div>
+        </div>
+        <div class="bottomButtonSection" onclick="xingnang();" tapmode>
+            <div class="bottomButton xingnang" id="xingnang"></div>
+        </div>
+    </footer>
+</body>
+<script type="text/javascript" src="./script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="./script/constant.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        //输出Log，Log将显示在APICloud Studio控制台
+        //console.log("Hello World! Hello APICloud!");
+
+        var header = $api.byId('header'); // 获取 header 标签元素
+        var footer = $api.byId('footer'); // 获取 footer 标签元素
+
+        // 1.修复开启沉浸式效果带来的顶部Header与手机状态栏重合的问题，最新api.js方法已支持适配iPhoneX；
+        // 2.默认已开启了沉浸式效果 config.xml中 <preference name="statusBarAppearance" value="true"/>
+        // 3.沉浸式效果适配支持iOS7+，Android4.4+以上版本
+        var headerH = $api.fixStatusBar(header);
+        // 最新api.js为了适配iPhoneX增加的方法，修复底部Footer部分与iPhoneX的底部虚拟横条键重叠的问题；
+        var footerH = $api.fixTabBar(footer);
+        //打开页面组，页面分别为悬赏榜（查询与发布）、江湖（社区）、行囊（我的）
+        var frameHeight = api.winHeight - headerH - footerH;
+        var indexFrameGroup = api.openFrameGroup({
+            name: 'indexFrameGroup',
+            background: '#fff',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: headerH,
+                w: 'auto',
+                h: frameHeight
+            },
+            index: 0,
+            preload: 1,
+            frames: [{
+                name: 'sw_main.html',
+                url: './html/sw_main.html',
+                bgColor: '#fff'
+            }, {
+                name: 'wode',
+                url: './html/lyy_mineFrame.html',
+                bgColor: '#fff'
+            }]
+        }, function(ret, err) {
+            if (ret) {
+                //alert( JSON.stringify( ret ) );
+                if (ret.index == 0) aa('悬赏', 0);
+                if (ret.index == 1) aa('行囊', 1);
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+        var userInfo = $api.getStorage('user_info');
+         //alert(JSON.stringify(userInfo));
+        var password = $api.getStorage('password');
+         //alert(JSON.stringify(password));
+        if (userInfo && password) {
+            lan(userInfo.username, password)
+        } else {
+            api.openWin({
+                name: 'login',
+                url: 'html/login.html'
+            });
+        }
+
+    };
+
+    function lan(username, password) {
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("user");
+        Model.login({
+            "username": username,
+            "password": password
+        }, function(ret, err) {
+            if (err) {
+                //处理错误 err
+                //alert("登陆失败");
+                //alert(JSON.stringify(err));
+                $api.clearStorage ();
+            } else {
+                //处理数据 ret
+                //alert("登陆成功");
+                // alert(JSON.stringify(ret));
+                getUserById(ret.userId, password);
+            }
+        })
+    }
+
+    function getUserById(id, password) {
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("user");
+        Model.get({
+            "_id": id
+        }, function(ret, err) {
+            if (err) {
+                //处理错误 err
+                //alert(JSON.stringify(err));
+            } else {
+                //处理数据 ret
+                // alert(JSON.stringify(ret));
+                $api.setStorage('user_info', ret);
+                console.log(JSON.stringify(ret));
+                $api.setStorage('password', password);
+            }
+        })
+    }
+
+    function xuanshang() {
+        aa('悬赏', 0);
+        api.sendEvent({
+            name: 'frameIndex02',
+            extra: {
+                key1: 'value1',
+                key2: 'value2'
+            }
+        });
+
+    }
+
+    function xingnang() {
+        aa('行囊', 1);
+        api.sendEvent({
+            name: 'frameIndex02',
+            extra: {
+                key1: 'value1',
+                key2: 'value2'
+            }
+        });
+
+    }
+
+    function aa(name, index) {
+        $('#header').html(name);
+        $('#xuanshangbang,#jianghu,#xingnang').removeClass('active');
+        if (name == '悬赏') $('#xuanshangbang').addClass('active');
+        if (name == '行囊') $('#xingnang').addClass('active');
+        api.setFrameGroupIndex({
+            name: 'indexFrameGroup',
+            index: index
+        });
+    }
+</script>
+
+</html>

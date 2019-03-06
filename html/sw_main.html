@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" href="../css/aui-pull-refresh.css">
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        body {}
+
+        .wrap {
+            padding: 0px 15px;
+        }
+
+        #release {
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            line-height: 50px;
+            position: fixed;
+            right: 0px;
+            bottom: 50px;
+            border-radius: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            font-weight: 400;
+        }
+
+        .aui-list-item .aui-media-list-item-inner .aui-list-item-inner {
+            /*margin-top: 0.1rem;*/
+            margin-bottom: 0.1rem;
+            padding-left: 0.3rem;
+            max-width: 310px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: #f7f7f7;
+            border-bottom-left-radius: 0.7rem;
+        }
+
+        .aui-list-item-inner .aui-list-item-text {
+            /*padding-bottom: 0.2rem;*/
+            max-width: 310px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .aui-list-item-text .aui-list-item-title {
+            font-weight: 200;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warp">
+        <div class="aui-content ">
+            <ul class="aui-list aui-media-list" id="articleList-box">
+
+            </ul>
+        </div>
+    </div>
+    <div id="release" onclick="fabu();" tapmode>
+        <div class="aui-col-xs-3">
+            <i class="aui-iconfont aui-icon-edit" style="font-size:20px;color:#fff;padding-left:15px;"></i>
+        </div>
+    </div>
+</body>
+<script id="articleTemp" type="text/x-dot-template">
+    {{~it:value:index}}
+    <li class="aui-list-item" onclick="content('{{=value.id}}','{{=value.userName.id}}');" tapmode>
+        <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-media" id="main_img_type">
+                <img src="{{=value.imgUrl}}">
+            </div>
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-text">
+                    <div class="aui-list-item-title"><b>{{=value.releaseName}}</b></div>
+                    <div class="aui-list-item-right">
+                        <div style="display:none;" name="distancelon">{{=value.lon}}</div>
+                        <div style="display:none;" name="distancelat">{{=value.lat}}</div>
+                    </div>
+                </div>
+                <div class="aui-list-item-text">
+                    目标：{{=value.goodsAddress}}({{=value.information}})
+                </div>
+                <div class="aui-list-item-text">
+                    收货：{{=value.releaseAddress}}
+                </div>
+            </div>
+        </div>
+        <div class="aui-info" style="line-height:0.8rem;">
+            <div class="aui-info-item">
+                <img src={{=value.userName.avatar}} style="width:1rem" class="aui-img-round" /><span class="aui-margin-l-5">{{=value.userName.userRealName}}</span>
+            </div>
+            <div class="aui-info-item longtime" name="shortTime"></div>
+            <div name="time" style="display:none;">{{=value.createdAt}}</div>
+            <div class="aui-info-item limitTime"><b>{{=value.timeLimit}}</b></div>
+            <div style="display:inline-block;color: #f9c51c;"><b>{{=value.goodsMoney}}元</b></div>
+        </div>
+    </li>
+    {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest-SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.js"></script>
+<script type="text/javascript" src="../script/constant.js"></script>
+<script type="text/javascript" src="../script/aui-scroll.js"></script>
+<script src="../script/aui-pull-refresh.js"></script>
+<script type="text/javascript" src="../script/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    var limiteNum = 15;
+    var mylon, mylat;
+    apiready = function() {
+        queryArticleList();
+        var aMap = api.require("aMap");
+        aMap.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: 320,
+                h: 300
+            },
+            showUserLocation: true,
+            zoomLevel: 11,
+            center: {
+                lon: 116.4021310000,
+                lat: 39.9994480000
+            },
+            fixedOn: api.frameName,
+            fixed: true
+        }, function(ret, err) {
+            if (ret.status) {
+                // alert(JSON.stringify(ret));
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+        aMap.hide();
+        aMap.getLocation({
+            "autoStop": true
+        }, function(ret, err) {
+            if (ret.status) {
+                // alert(JSON.stringify(ret));
+                mylon = ret.lon;
+                mylat = ret.lat;
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+
+    };
+</script>
+<script type="text/javascript">
+    // 跳转发布页面
+    function fabu() {
+        if ($api.getStorage('user_info')) {
+            api.openWin({
+                name: 'sw_fabu',
+                url: './sw_fabu.html'
+            });
+        } else {
+            api.openWin({
+                name: 'login',
+                url: './login.html'
+            });
+        }
+    }
+    // 跳转详细页面
+    function content(id, userId) {
+        api.openWin({
+            name: 'sw_content',
+            url: './sw_content.html',
+            pageParam: {
+                "id": id,
+                "userId": userId
+            }
+        });
+    }
+    // 下拉刷新
+    var pullRefresh = new auiPullToRefresh({
+        container: document.querySelector('.warp'),
+        triggerDistance: 100
+    }, function(ret) {
+        if (ret.status == "success") {
+            pullRefresh.cancelLoading();
+            queryArticleList();
+        }
+    })
+    // 数据库获取数据
+    function queryArticleList() {
+        var client = new Resource(APP_INFO.appId, APP_INFO.appKey);
+        var Model = client.Factory("mission");
+        Model.query({
+            "filter": {
+                "fields": {
+                    "id": true,
+                    "releaseName": true, //取餐
+                    "releaseAddress": true, //目标
+                    "goodsAddress": true, //收获
+                    "timeLimit": true, //时间限制
+                    "information": true, //详细信息
+                    "createdAt": true, //发布时间
+                    "goodsMoney": true, //赏金
+                    "userName": true, //发布人id
+                    "lon": true,
+                    "lat": true,
+                    "imgUrl":true
+                }, //或者["id","make","model"]
+                "include": "userNamePointer",
+                "order": "createdAt DESC",
+                "limit": limiteNum
+            }
+        }, function(ret, err) {
+            if (err) {
+                alert("抱歉亲，又失败了呢~");
+            } else {
+                //alert(JSON.stringify(ret));
+                var interation = doT.template($('#articleTemp').html());
+                //将数据显示到网页中
+                $('#articleList-box').html(interation(ret));
+                //做时间判断定时器
+                // var createdDate = new Date(ret[0].createdAt);
+                dsq();
+                setInterval(dsq, 60000);
+                distance();
+                setTimeout(distance,1500);
+                setInterval(distance, 60000);
+            }
+        })
+    }
+
+    // 获取位置并显示
+    function distance() {
+        var j = 0;
+        var lonArray = document.getElementsByName("distancelon");
+        var latArray = document.getElementsByName("distancelat");
+        //alert(mylon);
+        for (var i = 0; i < lonArray.length; i++) {
+            //console.log(i);
+            var lon = lonArray[i].innerHTML;
+            var lat = latArray[i].innerHTML;
+            //加载了一个数组存入amap
+            var aMap = api.require('aMap');
+            //alert(0);
+            aMap.getDistance({
+                start: {
+                    lon: lon,
+                    lat: lat
+                },
+                end: {
+                    lon: mylon,
+                    lat: mylat
+                }
+            }, function(ret, err) {
+                if (ret.status) {
+                    //alert(JSON.stringify(ret));
+                    var dist = Math.floor(ret.distance);
+                    //alert(dist);
+                    var html = dist + 'm';
+                    //alert(html);
+                    //console.log(i);
+                    lonArray[j].innerHTML = html;
+                    latArray[j].innerHTML = "";
+                    lonArray[j].style.display="inline-block";
+                    j++;
+                } else {
+                    alert("亲，网络又出错了，请稍等~");
+                    //alert(JSON.stringify(err));
+                }
+            });
+        }
+        //alert(1);
+        //setTimeout(location.reload(),1500);
+    }
+    // 时间计数器
+    function dsq() {
+        var divEleArray = document.getElementsByName("time");
+        var shortTimeArray = document.getElementsByName("shortTime");
+        var nowTime = new Date();
+        for (var i = 0; i < divEleArray.length; i++) {
+            var html = divEleArray[i].innerHTML;
+            var createdDate = new Date(html);
+            var Cz = nowTime.getTime() - createdDate.getTime();
+            // var days = parseInt(Cz/(24*60*60*1000));
+            Cz = Cz % (24 * 60 * 60 * 1000);
+            var hours = parseInt(Cz / (60 * 60 * 1000))
+            Cz = Cz % (60 * 60 * 1000);
+            var mins = parseInt(Cz / (60 * 1000));
+            // $('.longtime').html(mins+'分钟之前');
+            if (hours < 1) {
+                shortTimeArray[i].innerHTML = mins + '分钟之前';
+            }
+            // }else if(1<hours>2){
+            //     shortTimeArray[i].innerHTML=hours+'小时之前';
+            // // $(".longtime").html();
+            // }else if(2<hours>3){
+            //     shortTimeArray[i].innerHTML=hours+'小时之前';
+            // }
+            else {
+                shortTimeArray[i].innerHTML = hours + "时" + mins + '分钟之前';
+            }
+        }
+
+    }
+</script>
+
+</html>
