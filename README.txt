@@ -1,2 +1,2 @@
 本项目由apicloud开发
-主要代码存放再htmlsw_main.html中
+重功能代码存放再htmlsw_main.html中
